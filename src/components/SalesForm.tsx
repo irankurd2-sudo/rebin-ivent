@@ -274,6 +274,20 @@ export function SalesForm({ products, customers, categories, sellers, lastSeller
               
               {/* Category Filter */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <select
+                  name="selectedCategory"
+                  value={formData.selectedCategory}
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                >
+                  <option value="">Select Category ({categories.length} available)</option>
+                  {categories.map(category => (
+                    <option key={category.id} value={category.name}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                   <input
@@ -282,22 +296,10 @@ export function SalesForm({ products, customers, categories, sellers, lastSeller
                     value={formData.productSearch}
                     onChange={handleChange}
                     placeholder="Search by name or SKU..."
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled={formData.selectedCategory === ''}
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                   />
                 </div>
-                <select
-                  name="selectedCategory"
-                  value={formData.selectedCategory}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="">All Categories</option>
-                  {categories.map(category => (
-                    <option key={category.id} value={category.name}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
               </div>
             
             {/* Product Results */}
