@@ -69,6 +69,13 @@ function App() {
   const [showSalesForm, setShowSalesForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | undefined>();
 
+  console.log('App - Categories:', categories.length, categories);
+
+  // Force initialize categories if empty
+  if (categories.length === 0) {
+    console.warn('Categories array is empty! Check localStorage.');
+  }
+
   const handleAddProduct = () => {
     setEditingProduct(undefined);
     setShowProductForm(true);
