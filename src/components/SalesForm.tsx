@@ -45,7 +45,7 @@ export function SalesForm({ products, customers, categories, sellers, lastSeller
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(formData.productSearch.toLowerCase()) ||
                          product.sku.toLowerCase().includes(formData.productSearch.toLowerCase());
-    const matchesCategory = formData.selectedCategory === '' || product.category === formData.selectedCategory;
+    const matchesCategory = formData.selectedCategory !== '' && product.category === formData.selectedCategory;
     return matchesSearch && matchesCategory && product.stock > 0;
   });
 
@@ -303,7 +303,11 @@ export function SalesForm({ products, customers, categories, sellers, lastSeller
             {/* Product Results */}
             {formData.productSearch && !formData.productId && (
               <div className="max-h-48 overflow-y-auto border border-gray-200 rounded-md">
-                {filteredProducts.length > 0 ? (
+                {formData.selectedCategory === '' ? (
+                  <div className="p-3 text-orange-600 text-center bg-orange-50">
+                    Please select a category first
+                  </div>
+                ) : filteredProducts.length > 0 ? (
                   filteredProducts.slice(0, 10).map(product => (
                     <button
                       key={product.id}
@@ -326,7 +330,7 @@ export function SalesForm({ products, customers, categories, sellers, lastSeller
                     </button>
                   ))
                 ) : (
-                  <div className="p-3 text-gray-500 text-center">No products found</div>
+                  <div className="p-3 text-gray-500 text-center">No products found in this category</div>
                 )}
               </div>
             )}
