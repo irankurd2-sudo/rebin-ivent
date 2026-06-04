@@ -313,84 +313,102 @@ export function useInventorySupabase() {
   };
 
   const addProduct = async (productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
-    const existingProduct = await supabase
-      .from('products')
-      .select('id')
-      .eq('sku', productData.sku)
-      .maybeSingle();
-
-    if (existingProduct.data) {
-      const timestamp = Date.now().toString().slice(-4);
-      productData.sku = `${productData.sku}-${timestamp}`;
-    }
-
-    if (productData.category) {
-      const { data: existingCategory } = await supabase
-        .from('categories')
+    try {
+      const existingProduct = await supabase
+        .from('products')
         .select('id')
-        .eq('name', productData.category)
+        .eq('sku', productData.sku)
         .maybeSingle();
 
-      if (!existingCategory) {
-        await supabase
-          .from('categories')
-          .insert({
-            name: productData.category,
-            description: '',
-          });
+      if (existingProduct.data) {
+        const timestamp = Date.now().toString().slice(-4);
+        productData.sku = `${productData.sku}-${timestamp}`;
       }
-    }
 
-    const { data, error } = await supabase
-      .from('products')
-      .insert({
-        name: productData.name,
-        sku: productData.sku,
-        barcode: productData.barcode,
-        category: productData.category,
-        price: productData.price,
-        cost: productData.cost,
-        stock: productData.stock,
-        min_stock: productData.minStock,
-        description: productData.description,
-        image: productData.image,
-        supplier: productData.supplier,
-        location: productData.location,
-        color_variants: productData.colorVariants,
-        stock_warning_level: productData.stockWarningLevel || 'all',
-      })
-      .select()
-      .single();
+      if (productData.category) {
+        const { data: existingCategory } = await supabase
+          .from('categories')
+          .select('id')
+          .eq('name', productData.category)
+          .maybeSingle();
 
-    if (!error && data) {
-      await loadProducts();
-      await loadCategories();
+        if (!existingCategory) {
+          await supabase
+            .from('categories')
+            .insert({
+              name: productData.category,
+              description: '',
+            });
+        }
+      }
+
+      const { data, error } = await supabase
+        .from('products')
+        .insert({
+          name: productData.name,
+          sku: productData.sku,
+          barcode: productData.barcode,
+          category: productData.category,
+          price: productData.price,
+          cost: productData.cost,
+          stock: productData.stock,
+          min_stock: productData.minStock,
+          description: productData.description,
+          image: productData.image,
+          supplier: productData.supplier,
+          location: productData.location,
+          color_variants: productData.colorVariants,
+          stock_warning_level: productData.stockWarningLevel || 'all',
+        })
+        .select()
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      if (data) {
+        await loadProducts();
+        await loadCategories();
+        return data;
+      }
+    } catch (error) {
+      console.error('Error adding product:', error);
+      throw error;
     }
   };
 
   const updateProduct = async (id: string, productData: Partial<Product>) => {
-    const { error } = await supabase
-      .from('products')
-      .update({
-        name: productData.name,
-        sku: productData.sku,
-        barcode: productData.barcode,
-        category: productData.category,
-        price: productData.price,
-        cost: productData.cost,
-        stock: productData.stock,
-        min_stock: productData.minStock,
-        description: productData.description,
-        image: productData.image,
-        supplier: productData.supplier,
-        location: productData.location,
-        color_variants: productData.colorVariants,
-        stock_warning_level: productData.stockWarningLevel,
-      })
-      .eq('id', id);
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .update({
+          name: productData.name,
+          sku: productData.sku,
+          barcode: productData.barcode,
+          category: productData.category,
+          price: productData.price,
+          cost: productData.cost,
+          stock: productData.stock,
+          min_stock: productData.minStock,
+          description: productData.description,
+          image: productData.image,
+          supplier: productData.supplier,
+          location: productData.location,
+          color_variants: productData.colorVariants,
+          stock_warning_level: productData.stockWarningLevel,
+        })
+        .eq('id', id);
 
-    if (!error) {
+      if (error) {
+        throw error;
+      }
+
       await loadProducts();
+      return data;
+    } catch (error) {
+      console.error('Error updating product:', error);
+      throw error;
     }
   };
 

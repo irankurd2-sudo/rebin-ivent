@@ -143,14 +143,20 @@ function App() {
     setShowProductForm(true);
   };
 
-  const handleFormSubmit = (productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
-    if (editingProduct) {
-      updateProduct(editingProduct.id, productData);
-    } else {
-      addProduct(productData);
+  const handleFormSubmit = async (productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
+    try {
+      if (editingProduct) {
+        await updateProduct(editingProduct.id, productData);
+        toast.success('Product updated successfully!');
+      } else {
+        await addProduct(productData);
+        toast.success('Product added successfully!');
+      }
+      setShowProductForm(false);
+      setEditingProduct(undefined);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to save product');
     }
-    setShowProductForm(false);
-    setEditingProduct(undefined);
   };
 
   const handleDeleteProduct = (id: string) => {
