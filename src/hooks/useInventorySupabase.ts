@@ -314,6 +314,8 @@ export function useInventorySupabase() {
 
   const addProduct = async (productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
+      console.log('Adding product:', productData);
+
       const existingProduct = await supabase
         .from('products')
         .select('id')
@@ -333,6 +335,7 @@ export function useInventorySupabase() {
           .maybeSingle();
 
         if (!existingCategory) {
+          console.log('Creating new category:', productData.category);
           await supabase
             .from('categories')
             .insert({
@@ -342,6 +345,7 @@ export function useInventorySupabase() {
         }
       }
 
+      console.log('Inserting product to database:', productData);
       const { data, error } = await supabase
         .from('products')
         .insert({
@@ -364,9 +368,11 @@ export function useInventorySupabase() {
         .single();
 
       if (error) {
+        console.error('Database insert error:', error);
         throw error;
       }
 
+      console.log('Product inserted successfully:', data);
       if (data) {
         await loadProducts();
         await loadCategories();
