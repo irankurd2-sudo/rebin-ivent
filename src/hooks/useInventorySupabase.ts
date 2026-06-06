@@ -468,13 +468,19 @@ export function useInventorySupabase() {
       const [year, month, day] = saleData.saleDate.split('-').map(Number);
       const dateAtNoon = new Date(year, month - 1, day, 12, 0, 0);
       saleRecord.created_at = dateAtNoon.toISOString();
+      saleRecord.sale_date = saleData.saleDate;
+    } else {
+      saleRecord.sale_date = new Date().toISOString().split('T')[0];
     }
 
     const { error } = await supabase.from('sales').insert(saleRecord);
 
-    if (!error) {
-      await Promise.all([loadSales(), loadProducts()]);
+    if (error) {
+      console.error('Error inserting sale:', error);
+      throw new Error(`Failed to save sale: ${error.message}`);
     }
+
+    await Promise.all([loadSales(), loadProducts()]);
   };
 
   const deleteSale = async (saleId: string, restoreInventory: boolean = true) => {
