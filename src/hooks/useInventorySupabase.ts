@@ -246,6 +246,46 @@ export function useInventorySupabase() {
         smsNotifications: data.sms_notifications,
         lastSeller: data.last_seller,
       });
+    } else if (!data) {
+      // Auto-create default settings row if none exists
+      const { data: newData } = await supabase
+        .from('settings')
+        .insert({
+          currency: 'USD',
+          usd_to_iqd_rate: 1320,
+          date_format: 'MM/dd/yyyy',
+          low_stock_threshold: 10,
+          tax_rate: 0,
+          theme: 'light',
+          language: 'en',
+          auto_backup: false,
+          backup_frequency: 'daily',
+          email_notifications: true,
+          sms_notifications: false,
+        })
+        .select()
+        .single();
+
+      if (newData) {
+        setSettings({
+          currency: newData.currency,
+          usdToIqdRate: parseFloat(newData.usd_to_iqd_rate),
+          dateFormat: newData.date_format,
+          lowStockThreshold: newData.low_stock_threshold,
+          companyName: newData.company_name || '',
+          companyAddress: newData.company_address || '',
+          companyPhone: newData.company_phone || '',
+          companyEmail: newData.company_email || '',
+          taxRate: parseFloat(newData.tax_rate),
+          theme: newData.theme,
+          language: newData.language,
+          autoBackup: newData.auto_backup,
+          backupFrequency: newData.backup_frequency,
+          emailNotifications: newData.email_notifications,
+          smsNotifications: newData.sms_notifications,
+          lastSeller: newData.last_seller,
+        });
+      }
     }
   };
 
@@ -818,6 +858,11 @@ export function useInventorySupabase() {
   };
 
   const resetSalesHistory = async (restoreInventory: boolean = true) => {
+    const confirmation = window.confirm(
+      'WARNING: This will permanently delete ALL sales history. This cannot be undone!\n\nAre you sure you want to continue?'
+    );
+    if (!confirmation) return;
+
     try {
       console.log('Resetting sales history. Restore inventory:', restoreInventory);
 
@@ -881,6 +926,16 @@ export function useInventorySupabase() {
   };
 
   const resetAllData = async () => {
+    const confirmation = window.confirm(
+      'WARNING: This will permanently delete ALL your data including products, sales, returns, customers, and sellers. This cannot be undone!\n\nType "DELETE ALL" in the next prompt to confirm.'
+    );
+    if (!confirmation) return;
+
+    const typedConfirmation = window.prompt('Type "DELETE ALL" to confirm permanent data deletion:');
+    if (typedConfirmation !== 'DELETE ALL') {
+      return;
+    }
+
     await Promise.all([
       supabase.from('products').delete().neq('id', '00000000-0000-0000-0000-000000000000'),
       supabase.from('sales').delete().neq('id', '00000000-0000-0000-0000-000000000000'),
