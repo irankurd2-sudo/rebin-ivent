@@ -356,17 +356,6 @@ export function useInventorySupabase() {
     try {
       console.log('Adding product:', productData);
 
-      const existingProduct = await supabase
-        .from('products')
-        .select('id')
-        .eq('sku', productData.sku)
-        .maybeSingle();
-
-      if (existingProduct.data) {
-        const timestamp = Date.now().toString().slice(-4);
-        productData.sku = `${productData.sku}-${timestamp}`;
-      }
-
       if (productData.category) {
         const { data: existingCategory } = await supabase
           .from('categories')
