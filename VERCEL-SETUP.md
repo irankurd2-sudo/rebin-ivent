@@ -21,12 +21,12 @@ If you haven't deployed yet:
 
 ### Variable 1:
 - **Name**: `VITE_SUPABASE_URL`
-- **Value**: `https://rljmsqmzucindvulbvlj.supabase.co`
+- **Value**: `https://0ec90b57d6e95fcbda19832f.supabase.co`
 - **Environment**: Select all 3 (Production, Preview, Development)
 
 ### Variable 2:
 - **Name**: `VITE_SUPABASE_ANON_KEY`
-- **Value**: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsam1zcW16dWNpbmR2dWxidmxqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEwNDM4MjksImV4cCI6MjA3NjYxOTgyOX0.XE05uRWSjcIaDF3GwoYa2bDB5GTXdpBBr5IXaTkPYFI`
+- **Value**: (copy the value of VITE_SUPABASE_ANON_KEY from your project's `.env` file)
 - **Environment**: Select all 3 (Production, Preview, Development)
 
 ## Step 3: Redeploy
