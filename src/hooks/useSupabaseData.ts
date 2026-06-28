@@ -24,7 +24,7 @@ export function useSupabaseData() {
   const [sellers, setSellers] = useState<Seller[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [settings, setSettings] = useState<Settings>({
-    currency: 'USD',
+    currency: 'IQD',
     usdToIqdRate: 1320,
     dateFormat: 'MM/dd/yyyy',
     lowStockThreshold: 10,

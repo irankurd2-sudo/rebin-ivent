@@ -16,7 +16,7 @@ const STORAGE_KEYS = {
 const defaultCategories: Category[] = [];
 
 const defaultSettings: Settings = {
-  currency: 'USD',
+  currency: 'IQD',
   usdToIqdRate: 1320,
   dateFormat: 'dd/MM/yyyy',
   lowStockThreshold: 10,

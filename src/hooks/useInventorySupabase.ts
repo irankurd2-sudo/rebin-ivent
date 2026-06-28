@@ -18,7 +18,7 @@ export function useInventorySupabase() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [sellers, setSellers] = useState<Seller[]>([]);
   const [settings, setSettings] = useState<Settings>({
-    currency: 'USD',
+    currency: 'IQD',
     usdToIqdRate: 1320,
     dateFormat: 'MM/dd/yyyy',
     lowStockThreshold: 10,
@@ -251,7 +251,7 @@ export function useInventorySupabase() {
       const { data: newData } = await supabase
         .from('settings')
         .insert({
-          currency: 'USD',
+          currency: 'IQD',
           usd_to_iqd_rate: 1320,
           date_format: 'MM/dd/yyyy',
           low_stock_threshold: 10,
