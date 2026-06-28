@@ -301,7 +301,7 @@ function App() {
             <div className="flex-1">
               <p className="font-semibold">Configuration Error: Missing Supabase Environment Variables</p>
               <p className="text-sm text-red-100 mt-1">
-                Please configure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your Cloudflare Pages environment variables, then redeploy.
+                Please configure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your Vercel project environment variables (Settings → Environment Variables), then redeploy.
               </p>
             </div>
             <button
