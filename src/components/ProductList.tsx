@@ -123,11 +123,11 @@ export function ProductList({ products, categories, onEdit, onDelete, onAdd, onT
               <div className="text-sm text-blue-700">Products</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">${categoryStats.totalValue.toFixed(2)}</div>
+              <div className="text-2xl font-bold text-green-600">IQD {categoryStats.totalValue.toFixed(0)}</div>
               <div className="text-sm text-green-700">Total Value</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-orange-600">${categoryStats.totalCost.toFixed(2)}</div>
+              <div className="text-2xl font-bold text-orange-600">IQD {categoryStats.totalCost.toFixed(0)}</div>
               <div className="text-sm text-orange-700">Total Cost</div>
             </div>
             <div className="text-center">
@@ -411,11 +411,11 @@ export function ProductList({ products, categories, onEdit, onDelete, onAdd, onT
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Price:</span>
-                    <span className="font-medium text-green-600">${product.price.toFixed(2)}</span>
+                    <span className="font-medium text-green-600">IQD {product.price.toFixed(0)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Cost:</span>
-                    <span className="font-medium">${product.cost.toFixed(2)}</span>
+                    <span className="font-medium">IQD {product.cost.toFixed(0)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Stock:</span>

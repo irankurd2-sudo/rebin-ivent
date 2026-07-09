@@ -106,7 +106,7 @@ export function DeleteSaleModal({
                   <DollarSign className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium text-red-800">Total</p>
-                    <p className="text-sm font-bold text-slate-900">${sale.total.toFixed(2)}</p>
+                    <p className="text-sm font-bold text-slate-900">IQD {sale.total.toFixed(0)}</p>
                   </div>
                 </div>
               </div>

@@ -75,13 +75,9 @@ export function InvoiceGenerator({ sale, settings, onClose }: InvoiceGeneratorPr
     doc.text(sale.productName, 25, rowY);
     doc.text(sale.quantity.toString(), pageWidth - 100, rowY);
 
-    const currencySymbol = settings.currency === 'USD' ? '$' : 'IQD';
-    const displayPrice = settings.currency === 'IQD'
-      ? (sale.unitPrice * settings.usdToIqdRate).toFixed(0)
-      : sale.unitPrice.toFixed(2);
-    const displayDiscount = settings.currency === 'IQD'
-      ? (sale.discount * settings.usdToIqdRate).toFixed(0)
-      : sale.discount.toFixed(2);
+    const currencySymbol = 'IQD';
+    const displayPrice = (sale.unitPrice * settings.usdToIqdRate).toFixed(0);
+    const displayDiscount = (sale.discount * settings.usdToIqdRate).toFixed(0);
 
     doc.text(`${currencySymbol}${displayPrice}`, pageWidth - 75, rowY);
     doc.text(`${currencySymbol}${displayDiscount}`, pageWidth - 50, rowY);
@@ -89,15 +85,9 @@ export function InvoiceGenerator({ sale, settings, onClose }: InvoiceGeneratorPr
     doc.line(20, rowY + 5, pageWidth - 20, rowY + 5);
 
     const subtotal = sale.unitPrice * sale.quantity;
-    const displaySubtotal = settings.currency === 'IQD'
-      ? (subtotal * settings.usdToIqdRate).toFixed(0)
-      : subtotal.toFixed(2);
-    const displayTax = settings.currency === 'IQD'
-      ? (sale.tax * settings.usdToIqdRate).toFixed(0)
-      : sale.tax.toFixed(2);
-    const displayTotal = settings.currency === 'IQD'
-      ? (sale.total * settings.usdToIqdRate).toFixed(0)
-      : sale.total.toFixed(2);
+    const displaySubtotal = (subtotal * settings.usdToIqdRate).toFixed(0);
+    const displayTax = (sale.tax * settings.usdToIqdRate).toFixed(0);
+    const displayTotal = (sale.total * settings.usdToIqdRate).toFixed(0);
 
     const summaryY = rowY + 15;
     doc.text('Subtotal:', pageWidth - 80, summaryY);
@@ -142,19 +132,11 @@ export function InvoiceGenerator({ sale, settings, onClose }: InvoiceGeneratorPr
     const receiptWindow = window.open('', '_blank');
     if (!receiptWindow) return;
 
-    const currencySymbol = settings.currency === 'USD' ? '$' : 'IQD';
-    const displayPrice = settings.currency === 'IQD'
-      ? (sale.unitPrice * settings.usdToIqdRate).toFixed(0)
-      : sale.unitPrice.toFixed(2);
-    const displayDiscount = settings.currency === 'IQD'
-      ? (sale.discount * settings.usdToIqdRate).toFixed(0)
-      : sale.discount.toFixed(2);
-    const displayTax = settings.currency === 'IQD'
-      ? (sale.tax * settings.usdToIqdRate).toFixed(0)
-      : sale.tax.toFixed(2);
-    const displayTotal = settings.currency === 'IQD'
-      ? (sale.total * settings.usdToIqdRate).toFixed(0)
-      : sale.total.toFixed(2);
+    const currencySymbol = 'IQD';
+    const displayPrice = (sale.unitPrice * settings.usdToIqdRate).toFixed(0);
+    const displayDiscount = (sale.discount * settings.usdToIqdRate).toFixed(0);
+    const displayTax = (sale.tax * settings.usdToIqdRate).toFixed(0);
+    const displayTotal = (sale.total * settings.usdToIqdRate).toFixed(0);
 
     receiptWindow.document.write(`
       <!DOCTYPE html>
@@ -219,7 +201,7 @@ export function InvoiceGenerator({ sale, settings, onClose }: InvoiceGeneratorPr
         <div>${sale.productName}</div>
         <div class="row">
           <span>${sale.quantity} x ${currencySymbol}${displayPrice}</span>
-          <span>${currencySymbol}${(sale.quantity * parseFloat(displayPrice)).toFixed(settings.currency === 'IQD' ? 0 : 2)}</span>
+          <span>${currencySymbol}${(sale.quantity * parseFloat(displayPrice)).toFixed(0)}</span>
         </div>
         ${sale.discount > 0 ? `
           <div class="row">
@@ -292,20 +274,16 @@ export function InvoiceGenerator({ sale, settings, onClose }: InvoiceGeneratorPr
             <div className="flex justify-between mb-2">
               <span className="text-gray-600">{sale.productName}</span>
               <span className="font-semibold">
-                {sale.quantity} × {settings.currency === 'USD' ? '$' : 'IQD'}
-                {settings.currency === 'IQD'
-                  ? (sale.unitPrice * settings.usdToIqdRate).toFixed(0)
-                  : sale.unitPrice.toFixed(2)}
+                {sale.quantity} × IQD
+                {(sale.unitPrice * settings.usdToIqdRate).toFixed(0)}
               </span>
             </div>
             {sale.discount > 0 && (
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Discount</span>
                 <span>
-                  -{settings.currency === 'USD' ? '$' : 'IQD'}
-                  {settings.currency === 'IQD'
-                    ? (sale.discount * settings.usdToIqdRate).toFixed(0)
-                    : sale.discount.toFixed(2)}
+                  -IQD
+                  {(sale.discount * settings.usdToIqdRate).toFixed(0)}
                 </span>
               </div>
             )}
@@ -313,20 +291,16 @@ export function InvoiceGenerator({ sale, settings, onClose }: InvoiceGeneratorPr
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Tax</span>
                 <span>
-                  {settings.currency === 'USD' ? '$' : 'IQD'}
-                  {settings.currency === 'IQD'
-                    ? (sale.tax * settings.usdToIqdRate).toFixed(0)
-                    : sale.tax.toFixed(2)}
+                  IQD
+                  {(sale.tax * settings.usdToIqdRate).toFixed(0)}
                 </span>
               </div>
             )}
             <div className="flex justify-between pt-2 border-t mt-2 font-bold text-lg">
               <span>Total</span>
               <span className="text-blue-600">
-                {settings.currency === 'USD' ? '$' : 'IQD'}
-                {settings.currency === 'IQD'
-                  ? (sale.total * settings.usdToIqdRate).toFixed(0)
-                  : sale.total.toFixed(2)}
+                IQD
+                {(sale.total * settings.usdToIqdRate).toFixed(0)}
               </span>
             </div>
           </div>

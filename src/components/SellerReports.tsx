@@ -19,11 +19,8 @@ export function SellerReports({ sellers, sales, products, settings }: SellerRepo
   const [productSearch, setProductSearch] = useState<string>('');
 
   const formatCurrency = (amount: number) => {
-    const converted = settings.currency === 'IQD' ? amount * settings.usdToIqdRate : amount;
-    const symbol = settings.currency === 'USD' ? '$' : 'IQD ';
-    return settings.currency === 'USD'
-      ? `${symbol}${converted.toFixed(2)}`
-      : `${symbol}${converted.toLocaleString()}`;
+    const converted = amount * settings.usdToIqdRate;
+    return `IQD ${converted.toLocaleString()}`;
   };
 
   const getDateRange = () => {

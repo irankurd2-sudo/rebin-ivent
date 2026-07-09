@@ -269,7 +269,7 @@ export function LoanReports({ settings }: LoanReportsProps) {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-600">Total Loans</p>
-              <p className="text-2xl font-bold text-gray-900">${totalLoans.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-gray-900">IQD {totalLoans.toFixed(0)}</p>
             </div>
             <TrendingUp className="h-8 w-8 text-blue-500" />
           </div>
@@ -279,7 +279,7 @@ export function LoanReports({ settings }: LoanReportsProps) {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-600">Total Paid</p>
-              <p className="text-2xl font-bold text-green-600">${totalPaid.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-green-600">IQD {totalPaid.toFixed(0)}</p>
             </div>
             <CheckCircle className="h-8 w-8 text-green-500" />
           </div>
@@ -289,7 +289,7 @@ export function LoanReports({ settings }: LoanReportsProps) {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-600">Remaining</p>
-              <p className="text-2xl font-bold text-orange-600">${totalRemaining.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-orange-600">IQD {totalRemaining.toFixed(0)}</p>
             </div>
             <AlertCircle className="h-8 w-8 text-orange-500" />
           </div>

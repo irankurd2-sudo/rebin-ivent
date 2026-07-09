@@ -531,10 +531,10 @@ function App() {
                               {sale.quantity}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                              ${sale.total.toFixed(2)}
+                              IQD {sale.total.toFixed(0)}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600">
-                              ${sale.profit.toFixed(2)}
+                              IQD {sale.profit.toFixed(0)}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                               {sale.customerName || 'Walk-in'}

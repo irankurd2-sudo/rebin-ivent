@@ -433,7 +433,7 @@ export function SalesForm({ products, customers, categories, sellers, settings, 
                   </div>
                   <div className="text-right">
                     <div className="text-sm text-gray-500">Cost: ${selectedProduct.cost.toFixed(2)}</div>
-                    <div className="text-lg font-bold text-green-600">${selectedProduct.price.toFixed(2)}</div>
+                    <div className="text-lg font-bold text-green-600">IQD {selectedProduct.price.toFixed(0)}</div>
                     <div className="text-sm text-gray-600">Available: {selectedProduct.stock}</div>
                   </div>
                 </div>
@@ -775,15 +775,15 @@ export function SalesForm({ products, customers, categories, sellers, settings, 
               )}
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Original Cost per unit:</span>
-                <span className="text-gray-600">${costPrice.toFixed(2)}</span>
+                <span className="text-gray-600">IQD {costPrice.toFixed(0)}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Original Price per unit:</span>
-                <span className="text-gray-600">${unitPrice.toFixed(2)}</span>
+                <span className="text-gray-600">IQD {unitPrice.toFixed(0)}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Original Profit per unit:</span>
-                <span className="text-green-600 font-medium">${(unitPrice - costPrice).toFixed(2)}</span>
+                <span className="text-green-600 font-medium">IQD {(unitPrice - costPrice).toFixed(0)}</span>
               </div>
               {formData.discount > 0 && (
                 <>
@@ -795,7 +795,7 @@ export function SalesForm({ products, customers, categories, sellers, settings, 
                   <div className="border-t border-gray-200 my-2"></div>
                   <div className="flex justify-between">
                     <span className="text-gray-700">Final Cost per unit:</span>
-                    <span className="font-medium text-blue-600">${effectiveCost.toFixed(2)}</span>
+                    <span className="font-medium text-blue-600">IQD {effectiveCost.toFixed(0)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-700">Final Price per unit:</span>
@@ -811,7 +811,7 @@ export function SalesForm({ products, customers, categories, sellers, settings, 
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-700">Profit per unit:</span>
-                    <span className="font-medium text-green-600">${(effectiveSellingPrice - effectiveCost).toFixed(2)}</span>
+                    <span className="font-medium text-green-600">IQD {(effectiveSellingPrice - effectiveCost).toFixed(0)}</span>
                   </div>
                 </>
               )}
@@ -832,11 +832,11 @@ export function SalesForm({ products, customers, categories, sellers, settings, 
               )}
               <div className="flex justify-between border-t border-green-300 pt-3">
                 <span className="font-medium text-green-900">Customer Pays:</span>
-                <span className="font-bold text-2xl text-green-900">${total.toFixed(2)}</span>
+                <span className="font-bold text-2xl text-green-900">IQD {total.toFixed(0)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-700">Total Profit:</span>
-                <span className="font-bold text-xl text-green-700">${profit.toFixed(2)}</span>
+                <span className="font-bold text-xl text-green-700">IQD {profit.toFixed(0)}</span>
               </div>
               {formData.discount > 0 && (
                 <div className="bg-green-50 border border-green-200 rounded p-2 mt-2">

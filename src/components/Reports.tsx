@@ -320,7 +320,7 @@ export function Reports({ products, sales, customers, settings, onDeleteSale }: 
                   <DollarSign className="h-8 w-8 text-green-500" />
                   <div className="ml-3">
                     <p className="text-sm text-green-600">Total Revenue</p>
-                    <p className="text-xl font-bold text-green-900">${salesData.totalRevenue.toFixed(2)}</p>
+                    <p className="text-xl font-bold text-green-900">IQD {salesData.totalRevenue.toFixed(0)}</p>
                   </div>
                 </div>
               </div>
@@ -329,7 +329,7 @@ export function Reports({ products, sales, customers, settings, onDeleteSale }: 
                   <TrendingUp className="h-8 w-8 text-blue-500" />
                   <div className="ml-3">
                     <p className="text-sm text-blue-600">Total Profit</p>
-                    <p className="text-xl font-bold text-blue-900">${salesData.totalProfit.toFixed(2)}</p>
+                    <p className="text-xl font-bold text-blue-900">IQD {salesData.totalProfit.toFixed(0)}</p>
                   </div>
                 </div>
               </div>
@@ -479,7 +479,7 @@ export function Reports({ products, sales, customers, settings, onDeleteSale }: 
               </div>
               <div className="bg-green-50 p-4 rounded-lg">
                 <p className="text-sm text-green-600">Total Value</p>
-                <p className="text-xl font-bold text-green-900">${inventoryData.totalValue.toFixed(2)}</p>
+                <p className="text-xl font-bold text-green-900">IQD {inventoryData.totalValue.toFixed(0)}</p>
               </div>
               <div className="bg-yellow-50 p-4 rounded-lg">
                 <p className="text-sm text-yellow-600">Low Stock</p>

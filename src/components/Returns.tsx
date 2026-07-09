@@ -290,7 +290,7 @@ export function Returns({ returns, sales, products, settings, onAddReturn, onUpd
 
               <div>
                 <label className="block text-sm font-medium text-gray-700">Refund Amount</label>
-                <p className="text-sm text-gray-900">${selectedReturn.refundAmount.toFixed(2)}</p>
+                <p className="text-sm text-gray-900">IQD {selectedReturn.refundAmount.toFixed(0)}</p>
               </div>
 
               <div>

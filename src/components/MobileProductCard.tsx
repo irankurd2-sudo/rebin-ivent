@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Edit2, Trash2, Package, AlertTriangle, AlertOctagon, Bell, BellOff } from 'lucide-react';
+import { CreditCard as Edit2, Trash2, Package, AlertTriangle, AlertOctagon, Bell, BellOff } from 'lucide-react';
 import { Product, StockWarningLevel } from '../types';
 import { useSwipe } from '../hooks/useSwipe';
 import { getStockStatus } from '../utils/stockAlerts';
@@ -193,7 +193,7 @@ export function MobileProductCard({ product, onEdit, onDelete, onToggleWarnings,
             <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
               <div>
                 <span className="text-gray-600">Price:</span>
-                <span className="ml-1 font-medium text-green-600">${product.price.toFixed(2)}</span>
+                <span className="ml-1 font-medium text-green-600">IQD {product.price.toFixed(0)}</span>
               </div>
               <div>
                 <span className="text-gray-600">Stock:</span>
@@ -203,7 +203,7 @@ export function MobileProductCard({ product, onEdit, onDelete, onToggleWarnings,
               </div>
               <div>
                 <span className="text-gray-600">Cost:</span>
-                <span className="ml-1 font-medium">${product.cost.toFixed(2)}</span>
+                <span className="ml-1 font-medium">IQD {product.cost.toFixed(0)}</span>
               </div>
               <div>
                 <span className="text-gray-600">Margin:</span>

@@ -162,11 +162,8 @@ export function AdvancedReports({ sales, products, settings }: AdvancedReportsPr
   const worstProducts = worstPerformingProducts();
 
   const formatCurrency = (amount: number) => {
-    const symbol = settings.currency === 'USD' ? '$' : 'IQD';
-    const value = settings.currency === 'IQD'
-      ? (amount * settings.usdToIqdRate).toFixed(0)
-      : amount.toFixed(2);
-    return `${symbol}${value}`;
+    const value = (amount * settings.usdToIqdRate).toFixed(0);
+    return `IQD ${value}`;
   };
 
   return (

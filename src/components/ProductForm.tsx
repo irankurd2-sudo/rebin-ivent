@@ -406,11 +406,11 @@ export function ProductForm({ product, categories, onSubmit, onClose }: ProductF
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
                 <p className="text-xs text-gray-600">Cost Price</p>
-                <p className="text-lg font-bold text-gray-900">${formData.cost.toFixed(2)}</p>
+                <p className="text-lg font-bold text-gray-900">IQD {formData.cost.toFixed(0)}</p>
               </div>
               <div className="text-center">
                 <p className="text-xs text-gray-600">Selling Price</p>
-                <p className="text-lg font-bold text-blue-600">${formData.price.toFixed(2)}</p>
+                <p className="text-lg font-bold text-blue-600">IQD {formData.price.toFixed(0)}</p>
               </div>
               <div className="text-center">
                 <p className="text-xs text-gray-600">Profit</p>
