@@ -144,7 +144,7 @@ export function SalesForm({ products, customers, categories, sellers, settings, 
     setCart(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleCompleteSale = () => {
+  const handleCompleteSale = async () => {
     if (cart.length === 0) {
       alert('Please add at least one item to the cart');
       return;
@@ -157,36 +157,40 @@ export function SalesForm({ products, customers, categories, sellers, settings, 
 
     const transactionId = crypto.randomUUID();
 
-    cart.forEach(item => {
-      const itemTotal = item.unitPrice * item.quantity - item.discount;
-      const itemProfit = (item.unitPrice - item.unitCost) * item.quantity;
+    try {
+      for (const item of cart) {
+        const itemTotal = item.unitPrice * item.quantity - item.discount;
+        const itemProfit = (item.unitPrice - item.unitCost) * item.quantity;
 
-      const saleData: Omit<Sale, 'id' | 'date'> & { saleDate?: string; transactionId?: string } = {
-        productId: item.productId,
-        productName: item.productName,
-        productCategory: item.productCategory,
-        productColor: item.productColor,
-        quantity: item.quantity,
-        unitPrice: item.unitPrice,
-        unitCost: item.unitCost,
-        discount: item.discount,
-        tax: 0,
-        total: itemTotal,
-        profit: itemProfit,
-        paymentMethod: 'cash',
-        status: 'completed',
-        sellerId: formData.sellerId || undefined,
-        sellerName: formData.sellerName,
-        customerId: formData.customerId || undefined,
-        customerName: formData.customerName || undefined,
-        saleDate: formData.saleDate,
-        transactionId,
-      };
+        const saleData: Omit<Sale, 'id' | 'date'> & { saleDate?: string; transactionId?: string } = {
+          productId: item.productId,
+          productName: item.productName,
+          productCategory: item.productCategory,
+          productColor: item.productColor,
+          quantity: item.quantity,
+          unitPrice: item.unitPrice,
+          unitCost: item.unitCost,
+          discount: item.discount,
+          tax: 0,
+          total: itemTotal,
+          profit: itemProfit,
+          paymentMethod: 'cash',
+          status: 'completed',
+          sellerId: formData.sellerId || undefined,
+          sellerName: formData.sellerName,
+          customerId: formData.customerId || undefined,
+          customerName: formData.customerName || undefined,
+          saleDate: formData.saleDate,
+          transactionId,
+        };
 
-      onSubmit(saleData);
-    });
+        await onSubmit(saleData);
+      }
 
-    onClose();
+      onClose();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : 'Failed to complete sale');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
