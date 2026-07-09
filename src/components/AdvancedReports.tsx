@@ -162,8 +162,7 @@ export function AdvancedReports({ sales, products, settings }: AdvancedReportsPr
   const worstProducts = worstPerformingProducts();
 
   const formatCurrency = (amount: number) => {
-    const value = (amount * settings.usdToIqdRate).toFixed(0);
-    return `IQD ${value}`;
+    return `IQD ${amount.toFixed(0)}`;
   };
 
   return (

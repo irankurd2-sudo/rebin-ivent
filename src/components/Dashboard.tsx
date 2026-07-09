@@ -14,16 +14,8 @@ interface DashboardProps {
 }
 
 export function Dashboard({ products, sales, returns, settings, onQuickSale, onAddProduct }: DashboardProps) {
-  const convertCurrency = (amount: number) => {
-    if (settings.currency === 'IQD') {
-      return amount * settings.usdToIqdRate;
-    }
-    return amount;
-  };
-
   const formatCurrency = (amount: number) => {
-    const converted = convertCurrency(amount);
-    return `IQD ${converted.toLocaleString()}`;
+    return `IQD ${amount.toLocaleString()}`;
   };
 
   // Calculate stats
