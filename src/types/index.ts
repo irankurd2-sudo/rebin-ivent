@@ -56,6 +56,7 @@ export interface Sale {
   sellerName?: string;
   location?: string;
   transactionId?: string;
+  saleDate?: string;
 }
 
 export interface Return {

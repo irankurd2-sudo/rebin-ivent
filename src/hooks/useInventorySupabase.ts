@@ -84,7 +84,7 @@ export function useInventorySupabase() {
           image: p.image,
           supplier: p.supplier,
           location: p.location,
-          colorVariants: p.color_variants,
+          colorVariants: p.color_variants || [],
           stockWarningLevel: p.stock_warning_level || 'all',
           createdAt: new Date(p.created_at),
           updatedAt: new Date(p.updated_at),
@@ -124,7 +124,11 @@ export function useInventorySupabase() {
           sellerId: s.seller_id,
           sellerName: s.seller_name,
           location: s.location,
+          unitCost: s.unit_cost ? parseFloat(s.unit_cost) : 0,
+          productCategory: s.product_category,
+          productColor: s.product_color,
           transactionId: s.transaction_id,
+          saleDate: s.sale_date,
         }))
       );
     }
