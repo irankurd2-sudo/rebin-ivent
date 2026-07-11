@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Settings as SettingsIcon, Download, Upload, Save, Lock, Key, Plus, Tag, X } from 'lucide-react';
+import { Settings as SettingsIcon, Download, Upload, Save, Lock, Key, Plus, Tag, X, Trash2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Settings as SettingsType, AlertRule, Product, Sale, Customer, Seller, Category } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -35,6 +35,8 @@ export function Settings({ settings, alertRules, products, sales, customers, sel
   const [newCategoryDescription, setNewCategoryDescription] = useState('');
   const [categoryError, setCategoryError] = useState('');
   const [categorySuccess, setCategorySuccess] = useState(false);
+  const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
+  const [deleteCategoryError, setDeleteCategoryError] = useState('');
   const [showResetSalesModal, setShowResetSalesModal] = useState(false);
   const [showRestoreInventoryModal, setShowRestoreInventoryModal] = useState(false);
   const [showResetAllModal, setShowResetAllModal] = useState(false);
@@ -105,6 +107,25 @@ export function Settings({ settings, alertRules, products, sales, customers, sel
         setCategoryError('Failed to add category. Please try again.');
       }
       console.error('Error adding category:', err);
+    }
+  };
+
+  const handleDeleteCategory = async () => {
+    if (!categoryToDelete) return;
+    setDeleteCategoryError('');
+    try {
+      const { error } = await supabase
+        .from('categories')
+        .delete()
+        .eq('id', categoryToDelete.id);
+
+      if (error) throw error;
+
+      await loadCategories();
+      setCategoryToDelete(null);
+    } catch (err: any) {
+      setDeleteCategoryError(err.message || 'Failed to delete category. It may be in use by products.');
+      console.error('Error deleting category:', err);
     }
   };
 
@@ -675,16 +696,75 @@ export function Settings({ settings, alertRules, products, sales, customers, sel
                   {categories.map(category => (
                     <div
                       key={category.id}
-                      className="p-3 border border-gray-200 rounded-lg bg-gray-50"
+                      className="group p-3 border border-gray-200 rounded-lg bg-gray-50 hover:border-red-300 transition-colors"
                       title={category.description}
                     >
-                      <p className="font-medium text-gray-900 text-sm">{category.name}</p>
-                      {category.description && (
-                        <p className="text-xs text-gray-500 truncate">{category.description}</p>
-                      )}
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <p className="font-medium text-gray-900 text-sm">{category.name}</p>
+                          {category.description && (
+                            <p className="text-xs text-gray-500 truncate">{category.description}</p>
+                          )}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCategoryToDelete(category);
+                            setDeleteCategoryError('');
+                          }}
+                          className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all flex-shrink-0"
+                          title="Remove category"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Delete Category Confirmation Modal */}
+        {categoryToDelete && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+            <div className="bg-white rounded-xl shadow-2xl max-w-sm w-full p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-red-100 rounded-lg">
+                  <Trash2 className="h-5 w-5 text-red-600" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900">Remove Category</h3>
+              </div>
+              <p className="text-sm text-gray-600 mb-2">
+                Are you sure you want to remove <span className="font-semibold text-gray-900">{categoryToDelete.name}</span>?
+              </p>
+              <p className="text-xs text-gray-400 mb-4">
+                Products using this category will keep their current value but won't appear in this list.
+              </p>
+              {deleteCategoryError && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+                  {deleteCategoryError}
+                </div>
+              )}
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCategoryToDelete(null);
+                    setDeleteCategoryError('');
+                  }}
+                  className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDeleteCategory}
+                  className="flex-1 px-4 py-2.5 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors"
+                >
+                  Remove
+                </button>
               </div>
             </div>
           </div>
