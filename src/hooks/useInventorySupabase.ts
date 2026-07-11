@@ -379,11 +379,12 @@ export function useInventorySupabase() {
       }
 
       console.log('Inserting product to database:', productData);
+      const sku = productData.sku?.trim() || `SKU-${Date.now()}`;
       const { data, error } = await supabase
         .from('products')
         .insert({
           name: productData.name,
-          sku: productData.sku,
+          sku,
           barcode: productData.barcode,
           category: productData.category,
           price: productData.price,
@@ -423,7 +424,7 @@ export function useInventorySupabase() {
         .from('products')
         .update({
           name: productData.name,
-          sku: productData.sku,
+          sku: productData.sku?.trim() || `SKU-${Date.now()}`,
           barcode: productData.barcode,
           category: productData.category,
           price: productData.price,
